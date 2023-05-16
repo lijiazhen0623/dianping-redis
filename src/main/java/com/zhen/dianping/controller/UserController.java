@@ -3,9 +3,11 @@ package com.zhen.dianping.controller;
 
 import com.zhen.dianping.dto.LoginFormDTO;
 import com.zhen.dianping.dto.Result;
+import com.zhen.dianping.dto.UserDTO;
 import com.zhen.dianping.entity.UserInfo;
 import com.zhen.dianping.service.IUserInfoService;
 import com.zhen.dianping.service.IUserService;
+import com.zhen.dianping.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,12 +34,12 @@ public class UserController {
     private IUserInfoService userInfoService;
 
     /**
-     * 发送手机验证码
+     * 发送手机验证码(这里用邮箱验证码代替)
      */
     @PostMapping("code")
     public Result sendCode(@RequestParam("phone") String phone, HttpSession session) {
-        // TODO 发送短信验证码并保存验证码
-        return Result.fail("功能未完成");
+        //发送短信验证码并保存验证码
+        return userService.sendVerificationCode(phone,session);
     }
 
     /**
@@ -46,8 +48,8 @@ public class UserController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
-        // TODO 实现登录功能
-        return Result.fail("功能未完成");
+        // 实现登录功能
+        return userService.loginOrRegister(loginForm,session);
     }
 
     /**
@@ -62,8 +64,9 @@ public class UserController {
 
     @GetMapping("/me")
     public Result me(){
-        // TODO 获取当前登录的用户并返回
-        return Result.fail("功能未完成");
+        // 获取当前登录的用户并返回
+        UserDTO user = UserHolder.getUser();
+        return Result.ok(user);
     }
 
     @GetMapping("/info/{id}")
