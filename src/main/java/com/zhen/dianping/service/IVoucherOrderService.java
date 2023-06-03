@@ -1,6 +1,7 @@
 package com.zhen.dianping.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhen.dianping.dto.Result;
 import com.zhen.dianping.entity.VoucherOrder;
 
 /**
@@ -13,4 +14,7 @@ import com.zhen.dianping.entity.VoucherOrder;
  */
 public interface IVoucherOrderService extends IService<VoucherOrder> {
 
+    Result seckillVoucher(Long voucherId);
+
+    Result createVoucherOrder(Long voucherId);
 }

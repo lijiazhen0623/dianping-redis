@@ -51,7 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String verificationCode = RandomUtil.randomNumbers(6);
         //3、保存验证码到redis
 //        session.setAttribute("code", verificationCode);
-        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_CODE_KEY+phone,verificationCode,5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(RedisConstants.LOGIN_CODE_KEY+phone,verificationCode,RedisConstants.LOGIN_CODE_TTL, TimeUnit.MINUTES);
         //4、发送验证码
         VerificationCodeUtils.sendVerificationCode(phone,verificationCode);
         return Result.ok();
@@ -95,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                         .setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
         stringRedisTemplate.opsForHash().putAll(RedisConstants.LOGIN_USER_KEY+token,userMap);
         //设置过期时间
-        stringRedisTemplate.expire(RedisConstants.LOGIN_USER_KEY+token,30,TimeUnit.MINUTES);
+        stringRedisTemplate.expire(RedisConstants.LOGIN_USER_KEY+token,RedisConstants.LOGIN_USER_TTL,TimeUnit.MINUTES);
         return Result.ok(token);
     }
 
