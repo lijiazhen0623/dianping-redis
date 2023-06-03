@@ -52,6 +52,11 @@
             <artifactId>commons-email</artifactId>
             <version>1.5</version>
         </dependency>
+        <!--spring-aop：AOP核心功能，例如代理工厂等等，依赖 aspectjweave-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
 
 
         <dependency>
